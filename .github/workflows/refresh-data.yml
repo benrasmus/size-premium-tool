@@ -1,0 +1,43 @@
+name: Refresh size premium data
+
+# Ken French's Data Library updates roughly monthly. This workflow re-runs the
+# pipeline against the latest data and commits an updated web/data/results.json
+# so anyone cloning or deploying from this repo automatically gets recent data
+# without needing Python installed locally.
+
+on:
+  schedule:
+    # 06:00 UTC on the 3rd of each month (gives French's monthly update a couple days' buffer).
+    - cron: "0 6 3 * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install pipeline dependencies
+        run: pip install -r pipeline/requirements.txt
+
+      - name: Run pipeline
+        run: python pipeline/build_multi_scenario.py
+
+      - name: Commit updated results.json if changed
+        run: |
+          if git diff --quiet -- web/data/results.json; then
+            echo "No data changes."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add web/data/results.json
+          git commit -m "Refresh size premium data ($(date -u +%Y-%m-%d))"
+          git push

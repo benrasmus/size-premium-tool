@@ -1,0 +1,16 @@
+# Local tooling config (personal paths, not part of the project)
+.claude/
+
+# Python pipeline
+pipeline/.venv/
+pipeline/__pycache__/
+pipeline/raw_cache/
+pipeline/output/
+pipeline/output_1963_2004/
+*.pyc
+
+# Node / Next.js (web/ has its own .gitignore too, this is a belt-and-suspenders root rule)
+web/node_modules/
+web/.next/
+web/.env*
+!web/.env.local.example
