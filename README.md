@@ -1,4 +1,4 @@
-# Size Premium Tool
+# Size Premium Tool and Multiple Calculator for Small Businesses
 
 An independent, CRSP-derived approximation of the Ibbotson/Duff & Phelps size-premium
 study (the kind of table found in Shannon Pratt's *Valuing a Business*, Exhibits 9-6/9-7),
