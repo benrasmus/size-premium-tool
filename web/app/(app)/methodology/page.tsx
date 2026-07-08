@@ -129,6 +129,54 @@ export default function MethodologyPage() {
         </ul>
       </Section>
 
+      <Section title="Why this can't reliably value very small businesses on its own -- and what to do instead">
+        <p>
+          The size premium itself is genuinely contested. Damodaran (NYU) argues it hasn&apos;t existed in the data
+          for roughly 40 years; the ASA runs a continuing-education course literally titled &ldquo;The Size Premium:
+          Fact or Fiction&rdquo;; and yet surveys find the large majority of practitioners (on the order of 94%)
+          still use it, largely because it&apos;s defensible when it&apos;s the market norm. There is no clean
+          consensus, and this tool doesn&apos;t resolve that debate. What it can do is show you, concretely, where
+          the public-market approach (the Dashboard/default regression above) breaks down.
+        </p>
+        <p>
+          Take a genuinely small business: $400,000 EBITDA/SDE at a 2.5x multiple, no debt, so a $1,000,000 equity
+          value. The public-market regression above puts the size premium at roughly <strong>1.4%</strong> at that
+          size &mdash; because $1M sits about four log-units below the smallest decile this study actually observes
+          (which still averages in the tens of millions of dollars). Compare that to Galbraith (2025, Journal of
+          Entrepreneurial Finance), a regression fit directly on <em>private business transaction data</em> rather
+          than public markets: <span className="font-mono text-xs">Size Premium = 25% &minus; 2.45% &times; ln(equity value in $M)</span>,
+          which puts the same $1M company&apos;s size premium at roughly <strong>25%</strong> &mdash; a ~17x
+          difference on the same subject company, from two defensible-looking regressions. That gap is the whole
+          problem in one number: none of the public-market decile portfolios contain anything resembling a
+          $1M owner-operated business, so a regression fit on them has no real evidentiary basis once extrapolated
+          that far. The tool now surfaces this directly &mdash; the Lookup page&apos;s extrapolation warning scales
+          with how many log-units outside the observed range the subject company falls, and lets you switch to the
+          Galbraith source as an alternative built on more comparable data.
+        </p>
+        <p>
+          There&apos;s a second, independent way to see the same problem: work the build-up backward through a
+          perpetual-growth (Gordon Growth) model. A ~13&ndash;18% cost of equity (roughly what the public-market
+          build-up above produces for a small subject company, even with a meaningful company-specific risk premium
+          added) implies a cash-flow multiple of roughly <strong>6&ndash;9x</strong> at a modest growth assumption.
+          But market transaction databases (BizBuySell, DealStats, BIZCOMPS) show businesses this size actually
+          trading at roughly <strong>2&ndash;3.5x SDE</strong> &mdash; which, worked backward, implies discount rates
+          in the <strong>32&ndash;40%+</strong> range. No plausible risk-free rate, beta, or size premium (even
+          Galbraith&apos;s much larger one) closes that gap on its own. The Lookup page now computes and displays
+          this implied multiple next to a user-entered market-comparable range, so the mismatch is visible on every
+          run rather than something you have to compute by hand.
+        </p>
+        <p>
+          Two honest interpretations, and this tool doesn&apos;t pick one for you: either the size premium needs to
+          be far larger than any public-market study supports at this scale, or perpetual-growth DCF is structurally
+          the wrong tool for a small owner-operated business &mdash; which, unlike a public company, is not
+          reasonably modeled as generating cash flow forever; many don&apos;t survive an ownership transition intact.
+          Practically, for small subject companies, <strong>weight a market-multiple (comparable transaction)
+          approach as primary and treat the DCF/build-up figures as a secondary sanity check</strong>, not the other
+          way around. The Lookup page flags this automatically below a configurable equity-value threshold (default
+          $2M) and lets you enter your own comparable multiple range to check against.
+        </p>
+      </Section>
+
       <Section title="Value-weighted vs. equal-weighted: a diagnostic for recent-period reversals">
         <p>
           The Dashboard, Lookup, and Export pages all include a toggle between two weighting schemes for the same
