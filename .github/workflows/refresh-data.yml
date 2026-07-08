@@ -6,6 +6,11 @@ name: Refresh size premium data
 # without needing Python installed locally.
 
 on:
+  push:
+    # Also run whenever this workflow file itself changes -- lets you verify edits work,
+    # and (per a known GitHub quirk) helps a schedule-only workflow register reliably.
+    paths:
+      - ".github/workflows/refresh-data.yml"
   schedule:
     # 06:00 UTC on the 3rd of each month (gives French's monthly update a couple days' buffer).
     - cron: "0 6 3 * *"
