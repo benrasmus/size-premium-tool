@@ -1,8 +1,17 @@
 @import "tailwindcss";
 
+/* Tailwind v4 class-based dark mode: `dark:` variants apply when an ancestor has class="dark".
+   next-themes manages that class on <html> (toggle + system-preference default + persistence). */
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
+}
+
+.dark {
+  --background: #0a0a0a;
+  --foreground: #ededed;
 }
 
 @theme inline {
@@ -11,10 +20,6 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
-
-/* This app's layout (white/slate-50 cards, etc.) is light-mode only for now,
-   so don't flip text to a light color under prefers-color-scheme: dark --
-   it makes text unreadable against the still-light card backgrounds. */
 
 body {
   background: var(--background);

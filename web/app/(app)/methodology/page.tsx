@@ -2,8 +2,8 @@ export default function MethodologyPage() {
   return (
     <div className="max-w-3xl mx-auto space-y-6">
       <div>
-        <h1 className="text-2xl font-semibold text-slate-900 mb-2">Methodology</h1>
-        <p className="text-sm text-slate-500 leading-relaxed">
+        <h1 className="text-2xl font-semibold text-slate-900 dark:text-slate-100 mb-2">Methodology</h1>
+        <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
           This page is written to be excerpted into a valuation workpaper or report. It documents data sources,
           computation methodology, and known limitations relative to Kroll&apos;s Cost of Capital Navigator
           (formerly the Ibbotson/Duff &amp; Phelps size premium studies referenced in Shannon Pratt&apos;s valuation
@@ -229,9 +229,9 @@ export default function MethodologyPage() {
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="bg-white rounded-xl border border-slate-200 p-5">
-      <h2 className="font-semibold text-slate-900 mb-3">{title}</h2>
-      <div className="text-sm text-slate-600 leading-relaxed space-y-3">{children}</div>
+    <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-5">
+      <h2 className="font-semibold text-slate-900 dark:text-slate-100 mb-3">{title}</h2>
+      <div className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed space-y-3">{children}</div>
     </div>
   );
 }

@@ -19,9 +19,9 @@ type SizePremiumSource = "public" | "galbraith";
 
 const SEVERITY_STYLES: Record<ExtrapolationSeverity, string> = {
   none: "",
-  mild: "text-amber-600 bg-amber-50 border-amber-200",
-  moderate: "text-amber-800 bg-amber-50 border-amber-300",
-  severe: "text-red-700 bg-red-50 border-red-300",
+  mild: "text-amber-600 bg-amber-50 border-amber-200 dark:text-amber-400 dark:bg-amber-950 dark:border-amber-900",
+  moderate: "text-amber-800 bg-amber-50 border-amber-300 dark:text-amber-300 dark:bg-amber-950 dark:border-amber-800",
+  severe: "text-red-700 bg-red-50 border-red-300 dark:text-red-400 dark:bg-red-950 dark:border-red-900",
 };
 
 export default function LookupClient({ results }: { results: ResultsFile }) {
@@ -153,8 +153,8 @@ export default function LookupClient({ results }: { results: ResultsFile }) {
     <div className="space-y-8 print:space-y-4">
       <div className="flex items-start justify-between gap-4 print:hidden">
         <div>
-          <h1 className="text-2xl font-semibold text-slate-900">Cost of Equity Lookup</h1>
-          <p className="text-slate-500 text-sm mt-1">
+          <h1 className="text-2xl font-semibold text-slate-900 dark:text-slate-100">Cost of Equity Lookup</h1>
+          <p className="text-slate-500 dark:text-slate-400 text-sm mt-1">
             Bridge from EBITDA to equity value, then apply the smoothed size premium regression from the{" "}
             <a href="/dashboard" className="underline">
               Dashboard
@@ -165,13 +165,13 @@ export default function LookupClient({ results }: { results: ResultsFile }) {
         <div className="flex gap-2 shrink-0">
           <button
             onClick={exportSummary}
-            className="rounded-md border border-slate-300 text-slate-700 text-sm font-medium px-3 py-1.5 hover:bg-slate-50 transition whitespace-nowrap"
+            className="rounded-md border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-sm font-medium px-3 py-1.5 hover:bg-slate-50 dark:hover:bg-slate-800 transition whitespace-nowrap"
           >
             Export summary (CSV)
           </button>
           <button
             onClick={() => window.print()}
-            className="rounded-md border border-slate-300 text-slate-700 text-sm font-medium px-3 py-1.5 hover:bg-slate-50 transition whitespace-nowrap"
+            className="rounded-md border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-sm font-medium px-3 py-1.5 hover:bg-slate-50 dark:hover:bg-slate-800 transition whitespace-nowrap"
           >
             Print / Save as PDF
           </button>
@@ -179,11 +179,11 @@ export default function LookupClient({ results }: { results: ResultsFile }) {
       </div>
 
       <div className="flex flex-wrap items-center gap-3 print:hidden">
-        <label className="text-sm font-medium text-slate-700">Size premium study window:</label>
+        <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Size premium study window:</label>
         <select
           value={scenarioKey}
           onChange={(e) => setScenarioKey(e.target.value)}
-          className="rounded-md border border-slate-300 px-3 py-1.5 text-sm bg-white"
+          className="rounded-md border border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 px-3 py-1.5 text-sm bg-white"
         >
           {results.generated_scenarios.map((key) => (
             <option key={key} value={key}>
@@ -195,8 +195,8 @@ export default function LookupClient({ results }: { results: ResultsFile }) {
       </div>
 
       <div className="grid md:grid-cols-2 gap-6">
-        <div className="bg-white rounded-xl border border-slate-200 p-5 space-y-4">
-          <h2 className="font-semibold text-slate-900">Inputs</h2>
+        <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-5 space-y-4">
+          <h2 className="font-semibold text-slate-900 dark:text-slate-100">Inputs</h2>
 
           <FieldGroup title="EBITDA bridge to equity value">
             <NumberField
@@ -214,23 +214,23 @@ export default function LookupClient({ results }: { results: ResultsFile }) {
           </FieldGroup>
 
           <FieldGroup title="Size premium source">
-            <div className="inline-flex rounded-md border border-slate-300 bg-white p-0.5 text-sm">
+            <div className="inline-flex rounded-md border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 p-0.5 text-sm">
               <button
                 type="button"
                 onClick={() => setSizePremiumSource("public")}
-                className={`px-3 py-1 rounded transition ${sizePremiumSource === "public" ? "bg-slate-900 text-white" : "text-slate-600 hover:bg-slate-100"}`}
+                className={`px-3 py-1 rounded transition ${sizePremiumSource === "public" ? "bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900" : "text-slate-600 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"}`}
               >
                 Public market data
               </button>
               <button
                 type="button"
                 onClick={() => setSizePremiumSource("galbraith")}
-                className={`px-3 py-1 rounded transition ${sizePremiumSource === "galbraith" ? "bg-slate-900 text-white" : "text-slate-600 hover:bg-slate-100"}`}
+                className={`px-3 py-1 rounded transition ${sizePremiumSource === "galbraith" ? "bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900" : "text-slate-600 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"}`}
               >
                 Galbraith (2025), private transactions
               </button>
             </div>
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-slate-400 dark:text-slate-500">
               {sizePremiumSource === "public"
                 ? "This tool's own regression, fit on public company deciles (Dashboard). Reliable for larger companies; extrapolates severely for small subject companies -- see the warning below."
                 : "Size Premium = 25% - 2.45% x ln(equity value in $M), from Galbraith (2025), Journal of Entrepreneurial Finance -- fit on private business transaction data rather than public markets. Different data source, different biases -- see Methodology."}
@@ -285,8 +285,8 @@ export default function LookupClient({ results }: { results: ResultsFile }) {
         </div>
 
         <div className="space-y-6">
-          <div className="bg-white rounded-xl border border-slate-200 p-5">
-            <h2 className="font-semibold text-slate-900 mb-3">Valuation Bridge</h2>
+          <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-5">
+            <h2 className="font-semibold text-slate-900 dark:text-slate-100 mb-3">Valuation Bridge</h2>
             <table className="text-sm w-full">
               <tbody>
                 <Row label="Enterprise Value" value={fmtDollarsCompact(calc.enterpriseValue)} />
@@ -294,7 +294,7 @@ export default function LookupClient({ results }: { results: ResultsFile }) {
               </tbody>
             </table>
             {!calc.validSize && (
-              <p className="text-xs text-red-600 mt-2">
+              <p className="text-xs text-red-600 dark:text-red-400 mt-2">
                 Estimated equity value is zero or negative -- adjust inputs to get a valid size premium.
               </p>
             )}
@@ -305,17 +305,17 @@ export default function LookupClient({ results }: { results: ResultsFile }) {
               </p>
             )}
             {calc.validSize && sizePremiumSource === "galbraith" && (
-              <p className="text-xs text-slate-400 mt-2">
-                Galbraith's regression is fit on private transaction data typically well under $5M equity value.
+              <p className="text-xs text-slate-400 dark:text-slate-500 mt-2">
+                Galbraith&apos;s regression is fit on private transaction data typically well under $5M equity value.
                 Results far outside that range should be treated with the same caution as any extrapolation.
               </p>
             )}
           </div>
 
-          <div className="bg-white rounded-xl border border-slate-200 p-5">
-            <h2 className="font-semibold text-slate-900 mb-3">
+          <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-5">
+            <h2 className="font-semibold text-slate-900 dark:text-slate-100 mb-3">
               Cost of Equity Build-up{" "}
-              <span className="text-xs font-normal text-slate-400">
+              <span className="text-xs font-normal text-slate-400 dark:text-slate-500">
                 ({sizePremiumSource === "public" ? "public-market size premium" : "Galbraith size premium"})
               </span>
             </h2>
@@ -334,8 +334,8 @@ export default function LookupClient({ results }: { results: ResultsFile }) {
             </table>
           </div>
 
-          <div className="bg-white rounded-xl border border-slate-200 p-5">
-            <h2 className="font-semibold text-slate-900 mb-3">Implied Multiple &amp; Market Check</h2>
+          <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-5">
+            <h2 className="font-semibold text-slate-900 dark:text-slate-100 mb-3">Implied Multiple &amp; Market Check</h2>
             <table className="text-sm w-full">
               <tbody>
                 <Row
@@ -349,13 +349,13 @@ export default function LookupClient({ results }: { results: ResultsFile }) {
               </tbody>
             </table>
             {calc.dcfImpliedMultiple === null && (
-              <p className="text-xs text-red-600 mt-2">
+              <p className="text-xs text-red-600 dark:text-red-400 mt-2">
                 Cost of equity is at or below the growth rate -- the implied multiple is undefined (infinite). Lower
                 the growth rate or check your inputs.
               </p>
             )}
             {calc.dcfImpliedMultiple !== null && !calc.withinMarketRange && (
-              <p className="text-xs text-red-700 bg-red-50 border border-red-200 rounded p-2 mt-2">
+              <p className="text-xs text-red-700 bg-red-50 border border-red-200 rounded p-2 mt-2 dark:text-red-400 dark:bg-red-950 dark:border-red-900">
                 <span className="font-semibold">Mismatch:</span> the DCF-implied multiple ({fmtMultiple(calc.dcfImpliedMultiple)}) is{" "}
                 {calc.multipleGapRatio !== null && calc.multipleGapRatio > 1
                   ? `${calc.multipleGapRatio.toFixed(1)}x higher than`
@@ -366,12 +366,12 @@ export default function LookupClient({ results }: { results: ResultsFile }) {
               </p>
             )}
             {calc.dcfImpliedMultiple !== null && calc.withinMarketRange && (
-              <p className="text-xs text-emerald-700 bg-emerald-50 border border-emerald-200 rounded p-2 mt-2">
+              <p className="text-xs text-emerald-700 bg-emerald-50 border border-emerald-200 rounded p-2 mt-2 dark:text-emerald-400 dark:bg-emerald-950 dark:border-emerald-900">
                 The DCF-implied multiple falls within your market comparable range.
               </p>
             )}
             {calc.recommendMarketMultiple && (
-              <p className="text-xs text-slate-500 mt-3 border-t border-slate-100 pt-3">
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-3 border-t border-slate-100 dark:border-slate-800 pt-3">
                 Equity value ({fmtDollarsCompact(calc.equityValue)}) is below your {fmtDollarsCompact(smallBizThreshold)}{" "}
                 threshold. At this size, a market-multiple (comparable transaction) approach is typically more
                 reliable than perpetual-growth DCF/build-up -- treat the figures above as a secondary sanity check,
@@ -382,11 +382,11 @@ export default function LookupClient({ results }: { results: ResultsFile }) {
         </div>
       </div>
 
-      <div className="bg-white rounded-xl border border-slate-200 overflow-x-auto">
-        <h2 className="font-semibold text-slate-900 p-5 pb-0">Sensitivity: EBITDA Multiple</h2>
+      <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 overflow-x-auto">
+        <h2 className="font-semibold text-slate-900 dark:text-slate-100 p-5 pb-0">Sensitivity: EBITDA Multiple</h2>
         <table className="min-w-full text-sm mt-3">
           <thead>
-            <tr className="border-b border-slate-200 text-slate-500 text-xs uppercase tracking-wide">
+            <tr className="border-b border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 text-xs uppercase tracking-wide">
               <th className="text-left py-2 px-3">EBITDA Multiple</th>
               <th className="text-right py-2 px-3">Enterprise Value</th>
               <th className="text-right py-2 px-3">Equity Value</th>
@@ -399,7 +399,7 @@ export default function LookupClient({ results }: { results: ResultsFile }) {
             {sensitivity.map((row) => (
               <tr
                 key={row.multiple}
-                className={`border-b border-slate-100 last:border-0 ${Math.abs(row.multiple - multiple) < 1e-9 ? "bg-slate-50 font-medium" : ""}`}
+                className={`border-b border-slate-100 dark:border-slate-800 last:border-0 dark:text-slate-300 ${Math.abs(row.multiple - multiple) < 1e-9 ? "bg-slate-50 dark:bg-slate-800 font-medium dark:text-slate-100" : ""}`}
               >
                 <td className="py-2 px-3">{row.multiple.toFixed(2)}x</td>
                 <td className="py-2 px-3 text-right tabular-nums">{fmtDollarsCompact(row.ev)}</td>
@@ -419,7 +419,7 @@ export default function LookupClient({ results }: { results: ResultsFile }) {
 function FieldGroup({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div>
-      <h3 className="text-xs font-semibold uppercase tracking-wide text-slate-400 mb-2">{title}</h3>
+      <h3 className="text-xs font-semibold uppercase tracking-wide text-slate-400 dark:text-slate-500 mb-2">{title}</h3>
       <div className="space-y-2">{children}</div>
     </div>
   );
@@ -443,7 +443,7 @@ function NumberField({
   const displayValue = percent ? Number((value * 100).toFixed(4)) : value;
   return (
     <label className="flex flex-col gap-1">
-      <span className="text-sm text-slate-600">{label}</span>
+      <span className="text-sm text-slate-600 dark:text-slate-300">{label}</span>
       <div className="flex items-center gap-2">
         <input
           type="number"
@@ -453,22 +453,22 @@ function NumberField({
             const raw = Number(e.target.value);
             onChange(percent ? raw / 100 : raw);
           }}
-          className="w-full rounded-md border border-slate-300 px-3 py-1.5 text-sm"
+          className="w-full rounded-md border border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 px-3 py-1.5 text-sm"
         />
-        {percent && <span className="text-sm text-slate-400">%</span>}
+        {percent && <span className="text-sm text-slate-400 dark:text-slate-500">%</span>}
       </div>
-      {hint && <span className="text-xs text-slate-400">{hint}</span>}
+      {hint && <span className="text-xs text-slate-400 dark:text-slate-500">{hint}</span>}
     </label>
   );
 }
 
 function Row({ label, value, sub, bold }: { label: string; value: string; sub?: string; bold?: boolean }) {
   return (
-    <tr className="border-b border-slate-100 last:border-0">
-      <td className="py-2 text-slate-500">{label}</td>
-      <td className={`py-2 text-right tabular-nums ${bold ? "font-semibold text-slate-900" : "font-medium"}`}>
+    <tr className="border-b border-slate-100 dark:border-slate-800 last:border-0">
+      <td className="py-2 text-slate-500 dark:text-slate-400">{label}</td>
+      <td className={`py-2 text-right tabular-nums ${bold ? "font-semibold text-slate-900 dark:text-slate-100" : "font-medium dark:text-slate-200"}`}>
         {value}
-        {sub && <span className="block text-xs text-slate-400 font-normal">{sub}</span>}
+        {sub && <span className="block text-xs text-slate-400 dark:text-slate-500 font-normal">{sub}</span>}
       </td>
     </tr>
   );
